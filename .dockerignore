@@ -5,7 +5,6 @@ dist/
 .gitignore
 .idea/
 *.iml
-.claude/
 *.log
 .DS_Store
 .vscode/
