@@ -1,0 +1,37 @@
+<mat-form-field appearance="outline" class="autocomplete-field" subscriptSizing="dynamic">
+  <mat-label>Municipio</mat-label>
+
+  <input
+    matInput
+    type="text"
+    name="municipality"
+    autocomplete="off"
+    [formControl]="control"
+    [matAutocomplete]="auto"
+    (blur)="onBlur()"
+    placeholder="Empieza a escribir el nombre…"
+  />
+
+  @if (loading()) {
+    <mat-spinner matSuffix diameter="18" />
+  } @else {
+    <mat-icon matSuffix>search</mat-icon>
+  }
+
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    [displayWith]="displayFn"
+    autoActiveFirstOption
+    (optionSelected)="onSelected($event)"
+  >
+    @for (m of filteredMunicipalities(); track m.id) {
+      <mat-option [value]="m">{{ m.nombre }}</mat-option>
+    } @empty {
+      <mat-option disabled>Sin resultados</mat-option>
+    }
+  </mat-autocomplete>
+
+  @if (errorMessage(); as err) {
+    <mat-error>{{ err }}</mat-error>
+  }
+</mat-form-field>

@@ -1,0 +1,24 @@
+<mat-card class="weather-card" appearance="outlined">
+  <mat-card-content class="weather-card__content">
+    <form class="weather-card__inputs" (submit)="$event.preventDefault()">
+      <app-municipality-autocomplete
+        [municipalities]="store.municipalities()"
+        [loading]="store.municipalitiesStatus() === 'loading'"
+        [errorMessage]="store.municipalitiesError()"
+        (municipalitySelected)="onMunicipalitySelected($event)"
+      />
+
+      <app-temperature-unit-selector
+        [value]="store.temperatureUnit()"
+        (unitChanged)="onUnitChanged($event)"
+      />
+    </form>
+
+    <app-forecast-card
+      [municipality]="store.selectedMunicipality()"
+      [forecast]="store.forecast()"
+      [status]="store.forecastStatus()"
+      [errorMessage]="store.forecastError()"
+    />
+  </mat-card-content>
+</mat-card>

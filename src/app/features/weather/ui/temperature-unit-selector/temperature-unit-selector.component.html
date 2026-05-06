@@ -1,0 +1,15 @@
+<mat-form-field appearance="outline" class="unit-field" subscriptSizing="dynamic">
+  <mat-label>Unidad</mat-label>
+
+  <mat-select
+    [value]="value()"
+    (selectionChange)="onChange($event.value)"
+    panelWidth="auto"
+    aria-label="Unidad de temperatura"
+  >
+    <mat-option [value]="null">—</mat-option>
+    @for (opt of options; track opt.value) {
+      <mat-option [value]="opt.value">{{ opt.symbol }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
