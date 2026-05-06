@@ -1,0 +1,35 @@
+@use '@angular/material' as mat;
+
+// ---------------------------------------------------------------------------
+// Tema Material 3 (azure-blue) en modo claro. La aplicación es muy pequeña,
+// así que un único tema global es suficiente; si en el futuro se añadieran
+// vistas con paletas distintas, bastaría con extraer este bloque a un mixin.
+// ---------------------------------------------------------------------------
+html {
+  color-scheme: light;
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background: linear-gradient(180deg, #f6f8fb 0%, #eef1f6 100%);
+  color: rgba(0, 0, 0, 0.87);
+}
+
+* {
+  box-sizing: border-box;
+}

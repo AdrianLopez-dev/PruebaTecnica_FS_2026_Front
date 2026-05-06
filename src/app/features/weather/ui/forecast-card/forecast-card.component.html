@@ -1,0 +1,51 @@
+@switch (status()) {
+  @case ('idle') {
+    <p class="placeholder">Selecciona un municipio para ver la predicción.</p>
+  }
+
+  @case ('loading') {
+    <div class="state state--loading">
+      <mat-spinner diameter="36" />
+      <span>Consultando AEMET…</span>
+    </div>
+  }
+
+  @case ('error') {
+    <div class="state state--error" role="alert">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage() ?? 'No se ha podido obtener la predicción.' }}</span>
+    </div>
+  }
+
+  @case ('success') {
+    @if (forecast(); as data) {
+      <header class="forecast__header">
+        <h2 class="forecast__title">{{ municipality()?.nombre ?? '—' }}</h2>
+        <p class="forecast__date">{{ forecastDate | date: 'EEEE, d \'de\' MMMM \'de\' y' }}</p>
+      </header>
+
+      <section class="forecast__current">
+        <div class="forecast__temperature">
+          <span class="value">{{ data.mediaTemperatura | number: '1.0-1' }}</span>
+          <span class="unit">{{ unitSymbol() }}</span>
+        </div>
+        <mat-icon class="forecast__icon" aria-hidden="true">cloud</mat-icon>
+      </section>
+
+      @if (data.probPrecipitacion.length) {
+        <section class="forecast__precip" aria-label="Probabilidad de precipitación">
+          <mat-icon aria-hidden="true">grain</mat-icon>
+
+          <ol class="precip-list">
+            @for (slot of data.probPrecipitacion; track slot.periodo) {
+              <li class="precip-list__item">
+                <span class="probability">{{ slot.probabilidad }}%</span>
+                <span class="period">{{ slot.periodo }}</span>
+              </li>
+            }
+          </ol>
+        </section>
+      }
+    }
+  }
+}
